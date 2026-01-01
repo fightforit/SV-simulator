@@ -11,6 +11,7 @@ module adder_tb();
     logic [WIDTH-1:0] a;
     logic [WIDTH-1:0] b;
     logic [WIDTH-1:0] sum;
+    logic [2*WIDTH-1:0] product;
     adder #(
         .WIDTH(WIDTH)
      ) adder (
@@ -19,6 +20,14 @@ module adder_tb();
         .a   (a),
         .b   (b),
         .sum (sum)
+    );
+
+    mult #(
+        .WIDTH(WIDTH)
+    ) multiplier (
+        .a      (a),
+        .b      (b),
+        .product(product)
     );
 
     // signals initialization
@@ -42,7 +51,8 @@ module adder_tb();
 
     // monitor
     initial begin
-        $monitor("Time: %0t | rstn: %b | a: %d | b: %d | sum: %d", $time, rstn, a, b, sum);
+        $monitor("Time: %0t | rstn: %b | a: %d | b: %d | sum: %d | product: %d", 
+                  $time, rstn, a, b, sum, product);
     end
 
 endmodule

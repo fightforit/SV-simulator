@@ -9,7 +9,7 @@ namespace gen {
 class adder_tb {
 public:
     adder_tb(sim::Kernel& kernel, uint32_t CLK_PERIOD = 10, uint32_t WIDTH = 8)
-        : kernel(kernel), clk(1), rstn(1), a(8), b(8), sum(8), adder_inst(kernel, clk, rstn, a, b, sum) {
+        : kernel(kernel), clk(1), rstn(1), a(8), b(8), sum(8), product(16), adder_inst(kernel, clk, rstn, a, b, sum), multiplier(kernel, a, b, product) {
         {
             auto tick = std::make_shared<std::function<void()>>();
             *tick = [this, tick]() {
@@ -53,7 +53,7 @@ public:
         {
             uint64_t t2 = 0;
             kernel.schedule_at(t2, [this]() {
-                this->kernel.register_monitor("Time: %0t | rstn: %b | a: %d | b: %d | sum: %d", {sim::MonitorArg::time(), sim::MonitorArg::signalArg(&rstn), sim::MonitorArg::signalArg(&a), sim::MonitorArg::signalArg(&b), sim::MonitorArg::signalArg(&sum)});
+                this->kernel.register_monitor("Time: %0t | rstn: %b | a: %d | b: %d | sum: %d | product: %d", {sim::MonitorArg::time(), sim::MonitorArg::signalArg(&rstn), sim::MonitorArg::signalArg(&a), sim::MonitorArg::signalArg(&b), sim::MonitorArg::signalArg(&sum), sim::MonitorArg::signalArg(&product)});
             });
         }
     }
@@ -65,7 +65,9 @@ private:
     sim::Signal a;
     sim::Signal b;
     sim::Signal sum;
+    sim::Signal product;
     adder adder_inst;
+    mult multiplier;
 };
 
 } // namespace gen

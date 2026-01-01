@@ -1,4 +1,5 @@
 #include "sim/runtime.h"
+#include "mult.cpp"
 #include "adder.cpp"
 #include "adder_tb.cpp"
 

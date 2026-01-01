@@ -24,6 +24,7 @@ Status update
 - Codegen now emits `initial` blocks with `#delay`, `forever` clocks, and monitor setup.
 - Generated code compiles and links with `src/runtime.cpp`.
 - Codegen now instantiates child modules and wires ports (e.g., `adder_tb` instantiates `adder`).
+- Codegen supports `always_comb` and maps it to the same level-sensitive scheduling as `assign`.
 
 Milestone 4: Runtime kernel
 - Implement the shared runtime library (scheduler, signals, NBA queue).

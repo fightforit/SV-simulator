@@ -40,6 +40,8 @@ Discussion notes
 - A minimal simulator uses an event loop with active, time, and NBA queues.
 - Combinational loops can be detected best-effort at compile time via dependency cycles
   and guarded at runtime via delta-cycle iteration limits.
+- `always_comb` is implemented using the same level-sensitive scheduling as continuous assigns,
+  and the generator emits both through the same C++ path.
 - The generator currently emits one C++ file per instantiated module under `--cpp-out`.
 - The generator also writes `sim_main.cpp` in the output directory, which includes all emitted
   module `.cpp` files and runs `sim::Kernel`.

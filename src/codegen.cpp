@@ -357,6 +357,63 @@ bool emitInitialStatement(const Statement& stmt,
     }
 }
 
+void collectExprSignals(const Expression& expr,
+                        std::unordered_set<const ValueSymbol*>& deps) {
+    expr.visitSymbolReferences([&](const Expression&, const Symbol& sym) {
+        if (!ValueSymbol::isKind(sym.kind))
+            return;
+        if (sym.kind == SymbolKind::Parameter)
+            return;
+        deps.insert(&sym.as<ValueSymbol>());
+    });
+}
+
+void collectStatementSignals(const Statement& stmt,
+                             std::unordered_set<const ValueSymbol*>& deps) {
+    switch (stmt.kind) {
+        case StatementKind::Block: {
+            auto& block = stmt.as<BlockStatement>();
+            collectStatementSignals(block.body, deps);
+            break;
+        }
+        case StatementKind::List: {
+            auto& list = stmt.as<StatementList>();
+            for (auto* s : list.list)
+                collectStatementSignals(*s, deps);
+            break;
+        }
+        case StatementKind::Conditional: {
+            auto& cond = stmt.as<ConditionalStatement>();
+            collectExprSignals(*cond.conditions[0].expr, deps);
+            collectStatementSignals(cond.ifTrue, deps);
+            if (cond.ifFalse)
+                collectStatementSignals(*cond.ifFalse, deps);
+            break;
+        }
+        case StatementKind::Timed: {
+            auto& ts = stmt.as<TimedStatement>();
+            if (ts.timing.kind == TimingControlKind::Delay) {
+                auto& delay = ts.timing.as<DelayControl>();
+                collectExprSignals(delay.expr, deps);
+            }
+            collectStatementSignals(ts.stmt, deps);
+            break;
+        }
+        case StatementKind::ExpressionStatement: {
+            auto& es = stmt.as<ExpressionStatement>();
+            if (es.expr.kind == ExpressionKind::Assignment) {
+                auto& a = es.expr.as<AssignmentExpression>();
+                collectExprSignals(a.right(), deps);
+            } else {
+                collectExprSignals(es.expr, deps);
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 void emitStatement(const Statement& stmt,
                    const std::unordered_map<const ValueSymbol*, std::string>& names,
                    std::ostream& out,
@@ -480,6 +537,12 @@ bool emitModule(const InstanceSymbol& inst, const std::string& outDir) {
     }
 
     std::vector<std::pair<std::string, uint32_t>> extraSignals;
+    struct CombProc {
+        std::vector<const ValueSymbol*> deps;
+        const AssignmentExpression* assign = nullptr;
+        const Statement* stmt = nullptr;
+    };
+    std::vector<CombProc> combProcs;
 
     std::unordered_map<const ValueSymbol*, std::string> nameMap;
     for (const auto& port : ports) {
@@ -581,33 +644,17 @@ bool emitModule(const InstanceSymbol& inst, const std::string& outDir) {
     }
     out << " {\n";
 
-    int combIndex = 0;
     for (auto& assign : body.membersOfType<ContinuousAssignSymbol>()) {
         const Expression& expr = assign.getAssignment();
         if (expr.kind != ExpressionKind::Assignment)
             continue;
-        out << "        kernel.register_continuous([this]() { eval_comb_" << combIndex
-            << "(); }, {";
-
         auto& a = expr.as<AssignmentExpression>();
-        bool first = true;
-        a.right().visitSymbolReferences([&](const Expression&, const Symbol& sym) {
-            if (!ValueSymbol::isKind(sym.kind))
-                return;
-            if (sym.kind == SymbolKind::Parameter)
-                return;
-            const auto* val = &sym.as<ValueSymbol>();
-            auto it = nameMap.find(val);
-            if (it == nameMap.end())
-                return;
-            if (!first)
-                out << ", ";
-            first = false;
-            out << "&" << it->second;
-        });
-
-        out << "});\n";
-        combIndex++;
+        CombProc proc;
+        proc.assign = &a;
+        std::unordered_set<const ValueSymbol*> deps;
+        collectExprSignals(a.right(), deps);
+        proc.deps.assign(deps.begin(), deps.end());
+        combProcs.push_back(std::move(proc));
     }
 
     int ffIndex = 0;
@@ -632,6 +679,38 @@ bool emitModule(const InstanceSymbol& inst, const std::string& outDir) {
         }
         out << ");\n";
         ffIndex++;
+    }
+
+    for (auto& block : body.membersOfType<ProceduralBlockSymbol>()) {
+        if (block.procedureKind != ProceduralBlockKind::AlwaysComb)
+            continue;
+
+        const Statement& bodyStmt = block.getBody();
+        std::unordered_set<const ValueSymbol*> deps;
+        collectStatementSignals(bodyStmt, deps);
+
+        CombProc proc;
+        proc.stmt = &bodyStmt;
+        proc.deps.assign(deps.begin(), deps.end());
+        combProcs.push_back(std::move(proc));
+    }
+
+    int combProcIndex = 0;
+    for (const auto& comb : combProcs) {
+        out << "        kernel.register_continuous([this]() { eval_comb_proc_"
+            << combProcIndex << "(); }, {";
+        bool first = true;
+        for (const auto* dep : comb.deps) {
+            auto it = nameMap.find(dep);
+            if (it == nameMap.end())
+                continue;
+            if (!first)
+                out << ", ";
+            first = false;
+            out << "&" << it->second;
+        }
+        out << "});\n";
+        combProcIndex++;
     }
 
     int initIndex = 0;
@@ -707,24 +786,6 @@ bool emitModule(const InstanceSymbol& inst, const std::string& outDir) {
     for (const auto& child : children)
         out << "    " << child.className << " " << child.name << ";\n";
 
-    combIndex = 0;
-    for (auto& assign : body.membersOfType<ContinuousAssignSymbol>()) {
-        const Expression& expr = assign.getAssignment();
-        if (expr.kind != ExpressionKind::Assignment)
-            continue;
-        auto& a = expr.as<AssignmentExpression>();
-        const ValueSymbol* lhs = getValueSymbolFromExpr(a.left());
-        if (!lhs)
-            continue;
-        auto it = nameMap.find(lhs);
-        if (it == nameMap.end())
-            continue;
-        std::string rhs = emitExpr(a.right(), nameMap);
-        out << "\n    void eval_comb_" << combIndex++ << "() {\n";
-        out << "        " << it->second << ".set(" << rhs << ");\n";
-        out << "    }\n";
-    }
-
     ffIndex = 0;
     for (auto& block : body.membersOfType<ProceduralBlockSymbol>()) {
         if (block.procedureKind != ProceduralBlockKind::AlwaysFF)
@@ -739,6 +800,26 @@ bool emitModule(const InstanceSymbol& inst, const std::string& outDir) {
 
         out << "\n    void eval_ff_" << ffIndex++ << "() {\n";
         emitStatement(*stmtBody, nameMap, out, 8, true);
+        out << "    }\n";
+    }
+
+    combProcIndex = 0;
+    for (const auto& comb : combProcs) {
+        out << "\n    void eval_comb_proc_" << combProcIndex++ << "() {\n";
+        if (comb.assign) {
+            const ValueSymbol* lhs = getValueSymbolFromExpr(comb.assign->left());
+            if (lhs) {
+                auto it = nameMap.find(lhs);
+                if (it != nameMap.end()) {
+                    std::string rhs = emitExpr(comb.assign->right(), nameMap);
+                    out << "        " << it->second << ".set(" << rhs << ");\n";
+                }
+            }
+        } else if (comb.stmt) {
+            emitStatement(*comb.stmt, nameMap, out, 8, false);
+        } else {
+            out << "        // unsupported combinational block\n";
+        }
         out << "    }\n";
     }
 
