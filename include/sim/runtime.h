@@ -120,7 +120,7 @@ private:
     bool finished = false;
 
     std::priority_queue<Event, std::vector<Event>, EventCompare> eventQueue;
-    std::deque<Callback> activeQueue;
+    std::deque<Event> activeQueue;
     std::vector<NbaAssign> nbaQueue;
     std::vector<std::unique_ptr<Process>> processes;
     std::vector<std::unique_ptr<Monitor>> monitors;

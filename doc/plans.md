@@ -63,12 +63,15 @@ Breakdown
 
 Run the following from `/home/chlu/vsim` once the generator and runtime are implemented:
 
-    ./bin/svcc tests/adder.sv tests/adder_tb.sv --top adder_tb --out gen
+    g++ -std=c++20 src/main.cpp src/frontend.cpp src/simulator.cpp src/codegen.cpp src/runtime.cpp -Iinclude \
+      -I/home/chlu/slang/include -I/home/chlu/slang/build/source -I/home/chlu/slang/external \
+      -L/home/chlu/slang/build/lib -lsvlang -lfmt -lmimalloc -pthread -ldl -o sim
 
-    g++ -std=c++20 runtime/*.cpp gen/*.cpp -I/home/chlu/slang/include -L/home/chlu/slang/build/lib \
-      -lsvlang -lfmt -lmimalloc -pthread -ldl -o sim
+    ./sim --top adder_tb -file tests/file.f --cpp-out gen --no-sim
 
-    ./sim
+    g++ -std=c++20 gen/sim_main.cpp src/runtime.cpp -Iinclude -o gen/sim
+
+    ./gen/sim
 
 If compilation fails due to missing libraries, verify the slang build output under `/home/chlu/slang/build/lib` and update the library flags accordingly.
 

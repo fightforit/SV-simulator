@@ -7,10 +7,12 @@ Role
 Event Model
 - Maintain a time-ordered queue for future events and a current-time active queue.
 - At each simulation time, exhaust the active queue, then apply nonblocking updates.
+- Use a stable scheduling order: events are ordered by time, then by enqueue order.
 
 Queues
 - Active queue: processes scheduled for the current time.
 - NBA queue: staged nonblocking assignments applied after active work.
+- Event queue: time-ordered future work, with a deterministic tie-breaker on enqueue order.
 
 Scheduling Rules (minimal)
 - When a signal changes, schedule all dependent processes.

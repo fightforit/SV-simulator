@@ -154,11 +154,12 @@ void Kernel::nba_assign(Signal& signal, uint64_t value) {
 }
 
 void Kernel::scheduleAt(uint64_t time, Callback action) {
+    uint64_t order = nextOrder++;
     if (time == currentTime) {
-        activeQueue.push_back(std::move(action));
+        activeQueue.push_back(Event{time, order, std::move(action)});
         return;
     }
-    eventQueue.push(Event{time, nextOrder++, std::move(action)});
+    eventQueue.push(Event{time, order, std::move(action)});
 }
 
 void Kernel::scheduleProcess(Process& proc, uint64_t at) {
@@ -213,15 +214,16 @@ void Kernel::run() {
             uint64_t nextTime = eventQueue.top().time;
             currentTime = nextTime;
             while (!eventQueue.empty() && eventQueue.top().time == nextTime) {
-                activeQueue.push_back(std::move(eventQueue.top().action));
+                Event event = eventQueue.top();
                 eventQueue.pop();
+                activeQueue.push_back(std::move(event));
             }
         }
 
         while (!activeQueue.empty()) {
-            auto action = std::move(activeQueue.front());
+            auto event = std::move(activeQueue.front());
             activeQueue.pop_front();
-            action();
+            event.action();
         }
 
         if (!nbaQueue.empty())

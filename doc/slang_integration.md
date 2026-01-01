@@ -14,9 +14,9 @@ AST dump status
 
 Current usage
 - `./sim --top <top_module> -file <file.sv> [more.sv ...] --ast-out ast.json`
-- `./sim --top <top_module> -file <filelist.f> --ast-out ast.json`
-- `./sim --top <top_module> -file <file.sv> --cpp-out gen`
-- `./sim --top <top_module> -file <file.sv> --cpp-out gen --no-sim`
+- `./sim --top <top_module> -file tests/file.f --ast-out ast.json`
+- `./sim --top <top_module> -file tests/file.f --cpp-out gen`
+- `./sim --top <top_module> -file tests/file.f --cpp-out gen --no-sim`
 - `-file` accepts multiple paths until the next flag; `.f` files list one path per line
   and ignore blank lines plus lines starting with `#` or `//`.
 
@@ -24,7 +24,7 @@ Build and run (generated C++)
 - Build generator:
   - `g++ -std=c++20 src/main.cpp src/frontend.cpp src/simulator.cpp src/codegen.cpp src/runtime.cpp -Iinclude -I/home/chlu/slang/include -I/home/chlu/slang/build/source -I/home/chlu/slang/external -L/home/chlu/slang/build/lib -lsvlang -lfmt -lmimalloc -pthread -ldl -o sim`
 - Generate C++:
-  - `./sim --top adder_tb -file tests/adder.sv tests/adder_tb.sv --cpp-out gen --no-sim`
+  - `./sim --top adder_tb -file tests/file.f --cpp-out gen --no-sim`
 - Build generated sim:
   - `g++ -std=c++20 gen/sim_main.cpp src/runtime.cpp -Iinclude -o gen/sim`
 - Run:
@@ -38,6 +38,7 @@ Discussion notes
 - Module definitions map naturally to C++ classes; instances map to objects.
 - `always_ff` is edge-triggered; `always_comb` is level-triggered from RHS signals.
 - A minimal simulator uses an event loop with active, time, and NBA queues.
+- The runtime uses a stable scheduling order: time-ordered events with FIFO enqueue order.
 - Combinational loops can be detected best-effort at compile time via dependency cycles
   and guarded at runtime via delta-cycle iteration limits.
 - `always_comb` is implemented using the same level-sensitive scheduling as continuous assigns,
