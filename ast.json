@@ -1,0 +1,2050 @@
+[
+  {
+    "kind": "SyntaxTree",
+    "root": {
+      "kind": "CompilationUnit",
+      "members": [
+        {
+          "kind": "ModuleDeclaration",
+          "header": {
+            "kind": "ModuleHeader",
+            "moduleKeyword": {
+              "kind": "ModuleKeyword",
+              "text": "module"
+            },
+            "name": {
+              "kind": "Identifier",
+              "text": "adder_tb"
+            },
+            "ports": {
+              "kind": "AnsiPortList",
+              "openParen": {
+                "kind": "OpenParenthesis",
+                "text": "("
+              },
+              "closeParen": {
+                "kind": "CloseParenthesis",
+                "text": ")"
+              }
+            },
+            "semi": {
+              "kind": "Semicolon",
+              "text": ";"
+            }
+          },
+          "members": [
+            {
+              "kind": "ParameterDeclarationStatement",
+              "parameter": {
+                "kind": "ParameterDeclaration",
+                "keyword": {
+                  "kind": "ParameterKeyword",
+                  "text": "parameter"
+                },
+                "type": {
+                  "kind": "ImplicitType"
+                },
+                "declarators": [
+                  {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "CLK_PERIOD"
+                    },
+                    "initializer": {
+                      "kind": "EqualsValueClause",
+                      "equals": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "expr": {
+                        "kind": "IntegerLiteralExpression",
+                        "literal": {
+                          "kind": "IntegerLiteral",
+                          "text": "10"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "ParameterDeclarationStatement",
+              "parameter": {
+                "kind": "ParameterDeclaration",
+                "keyword": {
+                  "kind": "ParameterKeyword",
+                  "text": "parameter"
+                },
+                "type": {
+                  "kind": "ImplicitType"
+                },
+                "declarators": [
+                  {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "WIDTH"
+                    },
+                    "initializer": {
+                      "kind": "EqualsValueClause",
+                      "equals": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "expr": {
+                        "kind": "IntegerLiteralExpression",
+                        "literal": {
+                          "kind": "IntegerLiteral",
+                          "text": "8"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                }
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "clk"
+                  },
+                  "initializer": {
+                    "kind": "EqualsValueClause",
+                    "equals": {
+                      "kind": "Equals",
+                      "text": "="
+                    },
+                    "expr": {
+                      "kind": "IntegerVectorExpression",
+                      "size": {
+                        "kind": "IntegerLiteral",
+                        "text": "1"
+                      },
+                      "base": {
+                        "kind": "IntegerBase",
+                        "text": "'b"
+                      },
+                      "value": {
+                        "kind": "IntegerLiteral",
+                        "text": "0"
+                      }
+                    }
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "InitialBlock",
+              "keyword": {
+                "kind": "InitialKeyword",
+                "text": "initial"
+              },
+              "statement": {
+                "kind": "ForeverStatement",
+                "foreverKeyword": {
+                  "kind": "ForeverKeyword",
+                  "text": "forever"
+                },
+                "statement": {
+                  "kind": "TimingControlStatement",
+                  "timingControl": {
+                    "kind": "DelayControl",
+                    "hash": {
+                      "kind": "Hash",
+                      "text": "#"
+                    },
+                    "delayValue": {
+                      "kind": "ParenthesizedExpression",
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expression": {
+                        "kind": "DivideExpression",
+                        "left": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "CLK_PERIOD"
+                          }
+                        },
+                        "operatorToken": {
+                          "kind": "Slash",
+                          "text": "/"
+                        },
+                        "right": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "2"
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    }
+                  },
+                  "statement": {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "clk"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "UnaryBitwiseNotExpression",
+                        "operatorToken": {
+                          "kind": "Tilde",
+                          "text": "~"
+                        },
+                        "operand": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "clk"
+                          }
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                }
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "rstn"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                },
+                "dimensions": [
+                  {
+                    "kind": "VariableDimension",
+                    "openBracket": {
+                      "kind": "OpenBracket",
+                      "text": "["
+                    },
+                    "specifier": {
+                      "kind": "RangeDimensionSpecifier",
+                      "selector": {
+                        "kind": "SimpleRangeSelect",
+                        "left": {
+                          "kind": "SubtractExpression",
+                          "left": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "WIDTH"
+                            }
+                          },
+                          "operatorToken": {
+                            "kind": "Minus",
+                            "text": "-"
+                          },
+                          "right": {
+                            "kind": "IntegerLiteralExpression",
+                            "literal": {
+                              "kind": "IntegerLiteral",
+                              "text": "1"
+                            }
+                          }
+                        },
+                        "range": {
+                          "kind": "Colon",
+                          "text": ":"
+                        },
+                        "right": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "0"
+                          }
+                        }
+                      }
+                    },
+                    "closeBracket": {
+                      "kind": "CloseBracket",
+                      "text": "]"
+                    }
+                  }
+                ]
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "a"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                },
+                "dimensions": [
+                  {
+                    "kind": "VariableDimension",
+                    "openBracket": {
+                      "kind": "OpenBracket",
+                      "text": "["
+                    },
+                    "specifier": {
+                      "kind": "RangeDimensionSpecifier",
+                      "selector": {
+                        "kind": "SimpleRangeSelect",
+                        "left": {
+                          "kind": "SubtractExpression",
+                          "left": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "WIDTH"
+                            }
+                          },
+                          "operatorToken": {
+                            "kind": "Minus",
+                            "text": "-"
+                          },
+                          "right": {
+                            "kind": "IntegerLiteralExpression",
+                            "literal": {
+                              "kind": "IntegerLiteral",
+                              "text": "1"
+                            }
+                          }
+                        },
+                        "range": {
+                          "kind": "Colon",
+                          "text": ":"
+                        },
+                        "right": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "0"
+                          }
+                        }
+                      }
+                    },
+                    "closeBracket": {
+                      "kind": "CloseBracket",
+                      "text": "]"
+                    }
+                  }
+                ]
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "b"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                },
+                "dimensions": [
+                  {
+                    "kind": "VariableDimension",
+                    "openBracket": {
+                      "kind": "OpenBracket",
+                      "text": "["
+                    },
+                    "specifier": {
+                      "kind": "RangeDimensionSpecifier",
+                      "selector": {
+                        "kind": "SimpleRangeSelect",
+                        "left": {
+                          "kind": "SubtractExpression",
+                          "left": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "WIDTH"
+                            }
+                          },
+                          "operatorToken": {
+                            "kind": "Minus",
+                            "text": "-"
+                          },
+                          "right": {
+                            "kind": "IntegerLiteralExpression",
+                            "literal": {
+                              "kind": "IntegerLiteral",
+                              "text": "1"
+                            }
+                          }
+                        },
+                        "range": {
+                          "kind": "Colon",
+                          "text": ":"
+                        },
+                        "right": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "0"
+                          }
+                        }
+                      }
+                    },
+                    "closeBracket": {
+                      "kind": "CloseBracket",
+                      "text": "]"
+                    }
+                  }
+                ]
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "sum"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "HierarchyInstantiation",
+              "type": {
+                "kind": "Identifier",
+                "text": "adder"
+              },
+              "parameters": {
+                "kind": "ParameterValueAssignment",
+                "hash": {
+                  "kind": "Hash",
+                  "text": "#"
+                },
+                "openParen": {
+                  "kind": "OpenParenthesis",
+                  "text": "("
+                },
+                "parameters": [
+                  {
+                    "kind": "NamedParamAssignment",
+                    "dot": {
+                      "kind": "Dot",
+                      "text": "."
+                    },
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "WIDTH"
+                    },
+                    "openParen": {
+                      "kind": "OpenParenthesis",
+                      "text": "("
+                    },
+                    "expr": {
+                      "kind": "IdentifierName",
+                      "identifier": {
+                        "kind": "Identifier",
+                        "text": "WIDTH"
+                      }
+                    },
+                    "closeParen": {
+                      "kind": "CloseParenthesis",
+                      "text": ")"
+                    }
+                  }
+                ],
+                "closeParen": {
+                  "kind": "CloseParenthesis",
+                  "text": ")"
+                }
+              },
+              "instances": [
+                {
+                  "kind": "HierarchicalInstance",
+                  "decl": {
+                    "kind": "InstanceName",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "adder"
+                    }
+                  },
+                  "openParen": {
+                    "kind": "OpenParenthesis",
+                    "text": "("
+                  },
+                  "connections": [
+                    {
+                      "kind": "NamedPortConnection",
+                      "dot": {
+                        "kind": "Dot",
+                        "text": "."
+                      },
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "clk"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expr": {
+                        "kind": "SimplePropertyExpr",
+                        "expr": {
+                          "kind": "SimpleSequenceExpr",
+                          "expr": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "clk"
+                            }
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    },
+                    {
+                      "kind": "Comma",
+                      "text": ","
+                    },
+                    {
+                      "kind": "NamedPortConnection",
+                      "dot": {
+                        "kind": "Dot",
+                        "text": "."
+                      },
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "rstn"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expr": {
+                        "kind": "SimplePropertyExpr",
+                        "expr": {
+                          "kind": "SimpleSequenceExpr",
+                          "expr": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "rstn"
+                            }
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    },
+                    {
+                      "kind": "Comma",
+                      "text": ","
+                    },
+                    {
+                      "kind": "NamedPortConnection",
+                      "dot": {
+                        "kind": "Dot",
+                        "text": "."
+                      },
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "a"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expr": {
+                        "kind": "SimplePropertyExpr",
+                        "expr": {
+                          "kind": "SimpleSequenceExpr",
+                          "expr": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "a"
+                            }
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    },
+                    {
+                      "kind": "Comma",
+                      "text": ","
+                    },
+                    {
+                      "kind": "NamedPortConnection",
+                      "dot": {
+                        "kind": "Dot",
+                        "text": "."
+                      },
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "b"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expr": {
+                        "kind": "SimplePropertyExpr",
+                        "expr": {
+                          "kind": "SimpleSequenceExpr",
+                          "expr": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "b"
+                            }
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    },
+                    {
+                      "kind": "Comma",
+                      "text": ","
+                    },
+                    {
+                      "kind": "NamedPortConnection",
+                      "dot": {
+                        "kind": "Dot",
+                        "text": "."
+                      },
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "sum"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "expr": {
+                        "kind": "SimplePropertyExpr",
+                        "expr": {
+                          "kind": "SimpleSequenceExpr",
+                          "expr": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "sum"
+                            }
+                          }
+                        }
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      }
+                    }
+                  ],
+                  "closeParen": {
+                    "kind": "CloseParenthesis",
+                    "text": ")"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "InitialBlock",
+              "keyword": {
+                "kind": "InitialKeyword",
+                "text": "initial"
+              },
+              "statement": {
+                "kind": "SequentialBlockStatement",
+                "begin": {
+                  "kind": "BeginKeyword",
+                  "text": "begin"
+                },
+                "items": [
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "rstn"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "IntegerVectorExpression",
+                        "size": {
+                          "kind": "IntegerLiteral",
+                          "text": "1"
+                        },
+                        "base": {
+                          "kind": "IntegerBase",
+                          "text": "'b"
+                        },
+                        "value": {
+                          "kind": "IntegerLiteral",
+                          "text": "0"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "TimingControlStatement",
+                    "timingControl": {
+                      "kind": "DelayControl",
+                      "hash": {
+                        "kind": "Hash",
+                        "text": "#"
+                      },
+                      "delayValue": {
+                        "kind": "ParenthesizedExpression",
+                        "openParen": {
+                          "kind": "OpenParenthesis",
+                          "text": "("
+                        },
+                        "expression": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "CLK_PERIOD"
+                          }
+                        },
+                        "closeParen": {
+                          "kind": "CloseParenthesis",
+                          "text": ")"
+                        }
+                      }
+                    },
+                    "statement": {
+                      "kind": "ExpressionStatement",
+                      "expr": {
+                        "kind": "AssignmentExpression",
+                        "left": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "rstn"
+                          }
+                        },
+                        "operatorToken": {
+                          "kind": "Equals",
+                          "text": "="
+                        },
+                        "right": {
+                          "kind": "IntegerVectorExpression",
+                          "size": {
+                            "kind": "IntegerLiteral",
+                            "text": "1"
+                          },
+                          "base": {
+                            "kind": "IntegerBase",
+                            "text": "'b"
+                          },
+                          "value": {
+                            "kind": "IntegerLiteral",
+                            "text": "1"
+                          }
+                        }
+                      },
+                      "semi": {
+                        "kind": "Semicolon",
+                        "text": ";"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "a"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "UnbasedUnsizedLiteralExpression",
+                        "literal": {
+                          "kind": "UnbasedUnsizedLiteral",
+                          "text": "'0"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "b"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "UnbasedUnsizedLiteralExpression",
+                        "literal": {
+                          "kind": "UnbasedUnsizedLiteral",
+                          "text": "'0"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "TimingControlStatement",
+                    "timingControl": {
+                      "kind": "DelayControl",
+                      "hash": {
+                        "kind": "Hash",
+                        "text": "#"
+                      },
+                      "delayValue": {
+                        "kind": "ParenthesizedExpression",
+                        "openParen": {
+                          "kind": "OpenParenthesis",
+                          "text": "("
+                        },
+                        "expression": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "CLK_PERIOD"
+                          }
+                        },
+                        "closeParen": {
+                          "kind": "CloseParenthesis",
+                          "text": ")"
+                        }
+                      }
+                    },
+                    "statement": {
+                      "kind": "EmptyStatement",
+                      "semicolon": {
+                        "kind": "Semicolon",
+                        "text": ";"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "a"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "IntegerVectorExpression",
+                        "size": {
+                          "kind": "IntegerLiteral",
+                          "text": "8"
+                        },
+                        "base": {
+                          "kind": "IntegerBase",
+                          "text": "'d"
+                        },
+                        "value": {
+                          "kind": "IntegerLiteral",
+                          "text": "15"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "b"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "IntegerVectorExpression",
+                        "size": {
+                          "kind": "IntegerLiteral",
+                          "text": "8"
+                        },
+                        "base": {
+                          "kind": "IntegerBase",
+                          "text": "'d"
+                        },
+                        "value": {
+                          "kind": "IntegerLiteral",
+                          "text": "10"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "TimingControlStatement",
+                    "timingControl": {
+                      "kind": "DelayControl",
+                      "hash": {
+                        "kind": "Hash",
+                        "text": "#"
+                      },
+                      "delayValue": {
+                        "kind": "ParenthesizedExpression",
+                        "openParen": {
+                          "kind": "OpenParenthesis",
+                          "text": "("
+                        },
+                        "expression": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "CLK_PERIOD"
+                          }
+                        },
+                        "closeParen": {
+                          "kind": "CloseParenthesis",
+                          "text": ")"
+                        }
+                      }
+                    },
+                    "statement": {
+                      "kind": "EmptyStatement",
+                      "semicolon": {
+                        "kind": "Semicolon",
+                        "text": ";"
+                      }
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "a"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "IntegerVectorExpression",
+                        "size": {
+                          "kind": "IntegerLiteral",
+                          "text": "8"
+                        },
+                        "base": {
+                          "kind": "IntegerBase",
+                          "text": "'d"
+                        },
+                        "value": {
+                          "kind": "IntegerLiteral",
+                          "text": "25"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "AssignmentExpression",
+                      "left": {
+                        "kind": "IdentifierName",
+                        "identifier": {
+                          "kind": "Identifier",
+                          "text": "b"
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "Equals",
+                        "text": "="
+                      },
+                      "right": {
+                        "kind": "IntegerVectorExpression",
+                        "size": {
+                          "kind": "IntegerLiteral",
+                          "text": "8"
+                        },
+                        "base": {
+                          "kind": "IntegerBase",
+                          "text": "'d"
+                        },
+                        "value": {
+                          "kind": "IntegerLiteral",
+                          "text": "30"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  },
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "InvocationExpression",
+                      "left": {
+                        "kind": "SystemName",
+                        "systemIdentifier": {
+                          "kind": "SystemIdentifier",
+                          "text": "$finish"
+                        }
+                      },
+                      "arguments": {
+                        "kind": "ArgumentList",
+                        "openParen": {
+                          "kind": "OpenParenthesis",
+                          "text": "("
+                        },
+                        "closeParen": {
+                          "kind": "CloseParenthesis",
+                          "text": ")"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  }
+                ],
+                "end": {
+                  "kind": "EndKeyword",
+                  "text": "end"
+                }
+              }
+            },
+            {
+              "kind": "InitialBlock",
+              "keyword": {
+                "kind": "InitialKeyword",
+                "text": "initial"
+              },
+              "statement": {
+                "kind": "SequentialBlockStatement",
+                "begin": {
+                  "kind": "BeginKeyword",
+                  "text": "begin"
+                },
+                "items": [
+                  {
+                    "kind": "ExpressionStatement",
+                    "expr": {
+                      "kind": "InvocationExpression",
+                      "left": {
+                        "kind": "SystemName",
+                        "systemIdentifier": {
+                          "kind": "SystemIdentifier",
+                          "text": "$monitor"
+                        }
+                      },
+                      "arguments": {
+                        "kind": "ArgumentList",
+                        "openParen": {
+                          "kind": "OpenParenthesis",
+                          "text": "("
+                        },
+                        "parameters": [
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "StringLiteralExpression",
+                                  "literal": {
+                                    "kind": "StringLiteral",
+                                    "text": "\"Time: %0t | rstn: %b | a: %d | b: %d | sum: %d\""
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "Comma",
+                            "text": ","
+                          },
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "SystemName",
+                                  "systemIdentifier": {
+                                    "kind": "SystemIdentifier",
+                                    "text": "$time"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "Comma",
+                            "text": ","
+                          },
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "rstn"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "Comma",
+                            "text": ","
+                          },
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "a"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "Comma",
+                            "text": ","
+                          },
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "b"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "kind": "Comma",
+                            "text": ","
+                          },
+                          {
+                            "kind": "OrderedArgument",
+                            "expr": {
+                              "kind": "SimplePropertyExpr",
+                              "expr": {
+                                "kind": "SimpleSequenceExpr",
+                                "expr": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "sum"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "closeParen": {
+                          "kind": "CloseParenthesis",
+                          "text": ")"
+                        }
+                      }
+                    },
+                    "semi": {
+                      "kind": "Semicolon",
+                      "text": ";"
+                    }
+                  }
+                ],
+                "end": {
+                  "kind": "EndKeyword",
+                  "text": "end"
+                }
+              }
+            }
+          ],
+          "endmodule": {
+            "kind": "EndModuleKeyword",
+            "text": "endmodule"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "kind": "SyntaxTree",
+    "root": {
+      "kind": "CompilationUnit",
+      "members": [
+        {
+          "kind": "ModuleDeclaration",
+          "header": {
+            "kind": "ModuleHeader",
+            "moduleKeyword": {
+              "kind": "ModuleKeyword",
+              "text": "module"
+            },
+            "name": {
+              "kind": "Identifier",
+              "text": "adder"
+            },
+            "parameters": {
+              "kind": "ParameterPortList",
+              "hash": {
+                "kind": "Hash",
+                "text": "#"
+              },
+              "openParen": {
+                "kind": "OpenParenthesis",
+                "text": "("
+              },
+              "declarations": [
+                {
+                  "kind": "ParameterDeclaration",
+                  "keyword": {
+                    "kind": "ParameterKeyword",
+                    "text": "parameter"
+                  },
+                  "type": {
+                    "kind": "ImplicitType"
+                  },
+                  "declarators": [
+                    {
+                      "kind": "Declarator",
+                      "name": {
+                        "kind": "Identifier",
+                        "text": "WIDTH"
+                      },
+                      "initializer": {
+                        "kind": "EqualsValueClause",
+                        "equals": {
+                          "kind": "Equals",
+                          "text": "="
+                        },
+                        "expr": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "8"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "closeParen": {
+                "kind": "CloseParenthesis",
+                "text": ")"
+              }
+            },
+            "ports": {
+              "kind": "AnsiPortList",
+              "openParen": {
+                "kind": "OpenParenthesis",
+                "text": "("
+              },
+              "ports": [
+                {
+                  "kind": "ImplicitAnsiPort",
+                  "header": {
+                    "kind": "VariablePortHeader",
+                    "direction": {
+                      "kind": "InputKeyword",
+                      "text": "input"
+                    },
+                    "dataType": {
+                      "kind": "LogicType",
+                      "keyword": {
+                        "kind": "LogicKeyword",
+                        "text": "logic"
+                      }
+                    }
+                  },
+                  "declarator": {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "clk"
+                    }
+                  }
+                },
+                {
+                  "kind": "Comma",
+                  "text": ","
+                },
+                {
+                  "kind": "ImplicitAnsiPort",
+                  "header": {
+                    "kind": "VariablePortHeader",
+                    "direction": {
+                      "kind": "InputKeyword",
+                      "text": "input"
+                    },
+                    "dataType": {
+                      "kind": "LogicType",
+                      "keyword": {
+                        "kind": "LogicKeyword",
+                        "text": "logic"
+                      }
+                    }
+                  },
+                  "declarator": {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "rstn"
+                    }
+                  }
+                },
+                {
+                  "kind": "Comma",
+                  "text": ","
+                },
+                {
+                  "kind": "ImplicitAnsiPort",
+                  "header": {
+                    "kind": "VariablePortHeader",
+                    "direction": {
+                      "kind": "InputKeyword",
+                      "text": "input"
+                    },
+                    "dataType": {
+                      "kind": "LogicType",
+                      "keyword": {
+                        "kind": "LogicKeyword",
+                        "text": "logic"
+                      },
+                      "dimensions": [
+                        {
+                          "kind": "VariableDimension",
+                          "openBracket": {
+                            "kind": "OpenBracket",
+                            "text": "["
+                          },
+                          "specifier": {
+                            "kind": "RangeDimensionSpecifier",
+                            "selector": {
+                              "kind": "SimpleRangeSelect",
+                              "left": {
+                                "kind": "SubtractExpression",
+                                "left": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "WIDTH"
+                                  }
+                                },
+                                "operatorToken": {
+                                  "kind": "Minus",
+                                  "text": "-"
+                                },
+                                "right": {
+                                  "kind": "IntegerLiteralExpression",
+                                  "literal": {
+                                    "kind": "IntegerLiteral",
+                                    "text": "1"
+                                  }
+                                }
+                              },
+                              "range": {
+                                "kind": "Colon",
+                                "text": ":"
+                              },
+                              "right": {
+                                "kind": "IntegerLiteralExpression",
+                                "literal": {
+                                  "kind": "IntegerLiteral",
+                                  "text": "0"
+                                }
+                              }
+                            }
+                          },
+                          "closeBracket": {
+                            "kind": "CloseBracket",
+                            "text": "]"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "declarator": {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "a"
+                    }
+                  }
+                },
+                {
+                  "kind": "Comma",
+                  "text": ","
+                },
+                {
+                  "kind": "ImplicitAnsiPort",
+                  "header": {
+                    "kind": "VariablePortHeader",
+                    "direction": {
+                      "kind": "InputKeyword",
+                      "text": "input"
+                    },
+                    "dataType": {
+                      "kind": "LogicType",
+                      "keyword": {
+                        "kind": "LogicKeyword",
+                        "text": "logic"
+                      },
+                      "dimensions": [
+                        {
+                          "kind": "VariableDimension",
+                          "openBracket": {
+                            "kind": "OpenBracket",
+                            "text": "["
+                          },
+                          "specifier": {
+                            "kind": "RangeDimensionSpecifier",
+                            "selector": {
+                              "kind": "SimpleRangeSelect",
+                              "left": {
+                                "kind": "SubtractExpression",
+                                "left": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "WIDTH"
+                                  }
+                                },
+                                "operatorToken": {
+                                  "kind": "Minus",
+                                  "text": "-"
+                                },
+                                "right": {
+                                  "kind": "IntegerLiteralExpression",
+                                  "literal": {
+                                    "kind": "IntegerLiteral",
+                                    "text": "1"
+                                  }
+                                }
+                              },
+                              "range": {
+                                "kind": "Colon",
+                                "text": ":"
+                              },
+                              "right": {
+                                "kind": "IntegerLiteralExpression",
+                                "literal": {
+                                  "kind": "IntegerLiteral",
+                                  "text": "0"
+                                }
+                              }
+                            }
+                          },
+                          "closeBracket": {
+                            "kind": "CloseBracket",
+                            "text": "]"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "declarator": {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "b"
+                    }
+                  }
+                },
+                {
+                  "kind": "Comma",
+                  "text": ","
+                },
+                {
+                  "kind": "ImplicitAnsiPort",
+                  "header": {
+                    "kind": "VariablePortHeader",
+                    "direction": {
+                      "kind": "OutputKeyword",
+                      "text": "output"
+                    },
+                    "dataType": {
+                      "kind": "LogicType",
+                      "keyword": {
+                        "kind": "LogicKeyword",
+                        "text": "logic"
+                      },
+                      "dimensions": [
+                        {
+                          "kind": "VariableDimension",
+                          "openBracket": {
+                            "kind": "OpenBracket",
+                            "text": "["
+                          },
+                          "specifier": {
+                            "kind": "RangeDimensionSpecifier",
+                            "selector": {
+                              "kind": "SimpleRangeSelect",
+                              "left": {
+                                "kind": "SubtractExpression",
+                                "left": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "WIDTH"
+                                  }
+                                },
+                                "operatorToken": {
+                                  "kind": "Minus",
+                                  "text": "-"
+                                },
+                                "right": {
+                                  "kind": "IntegerLiteralExpression",
+                                  "literal": {
+                                    "kind": "IntegerLiteral",
+                                    "text": "1"
+                                  }
+                                }
+                              },
+                              "range": {
+                                "kind": "Colon",
+                                "text": ":"
+                              },
+                              "right": {
+                                "kind": "IntegerLiteralExpression",
+                                "literal": {
+                                  "kind": "IntegerLiteral",
+                                  "text": "0"
+                                }
+                              }
+                            }
+                          },
+                          "closeBracket": {
+                            "kind": "CloseBracket",
+                            "text": "]"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "declarator": {
+                    "kind": "Declarator",
+                    "name": {
+                      "kind": "Identifier",
+                      "text": "sum"
+                    }
+                  }
+                }
+              ],
+              "closeParen": {
+                "kind": "CloseParenthesis",
+                "text": ")"
+              }
+            },
+            "semi": {
+              "kind": "Semicolon",
+              "text": ";"
+            }
+          },
+          "members": [
+            {
+              "kind": "DataDeclaration",
+              "type": {
+                "kind": "LogicType",
+                "keyword": {
+                  "kind": "LogicKeyword",
+                  "text": "logic"
+                },
+                "dimensions": [
+                  {
+                    "kind": "VariableDimension",
+                    "openBracket": {
+                      "kind": "OpenBracket",
+                      "text": "["
+                    },
+                    "specifier": {
+                      "kind": "RangeDimensionSpecifier",
+                      "selector": {
+                        "kind": "SimpleRangeSelect",
+                        "left": {
+                          "kind": "SubtractExpression",
+                          "left": {
+                            "kind": "IdentifierName",
+                            "identifier": {
+                              "kind": "Identifier",
+                              "text": "WIDTH"
+                            }
+                          },
+                          "operatorToken": {
+                            "kind": "Minus",
+                            "text": "-"
+                          },
+                          "right": {
+                            "kind": "IntegerLiteralExpression",
+                            "literal": {
+                              "kind": "IntegerLiteral",
+                              "text": "1"
+                            }
+                          }
+                        },
+                        "range": {
+                          "kind": "Colon",
+                          "text": ":"
+                        },
+                        "right": {
+                          "kind": "IntegerLiteralExpression",
+                          "literal": {
+                            "kind": "IntegerLiteral",
+                            "text": "0"
+                          }
+                        }
+                      }
+                    },
+                    "closeBracket": {
+                      "kind": "CloseBracket",
+                      "text": "]"
+                    }
+                  }
+                ]
+              },
+              "declarators": [
+                {
+                  "kind": "Declarator",
+                  "name": {
+                    "kind": "Identifier",
+                    "text": "wSum"
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "ContinuousAssign",
+              "assign": {
+                "kind": "AssignKeyword",
+                "text": "assign"
+              },
+              "assignments": [
+                {
+                  "kind": "AssignmentExpression",
+                  "left": {
+                    "kind": "IdentifierName",
+                    "identifier": {
+                      "kind": "Identifier",
+                      "text": "wSum"
+                    }
+                  },
+                  "operatorToken": {
+                    "kind": "Equals",
+                    "text": "="
+                  },
+                  "right": {
+                    "kind": "AddExpression",
+                    "left": {
+                      "kind": "IdentifierName",
+                      "identifier": {
+                        "kind": "Identifier",
+                        "text": "a"
+                      }
+                    },
+                    "operatorToken": {
+                      "kind": "Plus",
+                      "text": "+"
+                    },
+                    "right": {
+                      "kind": "IdentifierName",
+                      "identifier": {
+                        "kind": "Identifier",
+                        "text": "b"
+                      }
+                    }
+                  }
+                }
+              ],
+              "semi": {
+                "kind": "Semicolon",
+                "text": ";"
+              }
+            },
+            {
+              "kind": "AlwaysFFBlock",
+              "keyword": {
+                "kind": "AlwaysFFKeyword",
+                "text": "always_ff"
+              },
+              "statement": {
+                "kind": "TimingControlStatement",
+                "timingControl": {
+                  "kind": "EventControlWithExpression",
+                  "at": {
+                    "kind": "At",
+                    "text": "@"
+                  },
+                  "expr": {
+                    "kind": "ParenthesizedEventExpression",
+                    "openParen": {
+                      "kind": "OpenParenthesis",
+                      "text": "("
+                    },
+                    "expr": {
+                      "kind": "BinaryEventExpression",
+                      "left": {
+                        "kind": "SignalEventExpression",
+                        "edge": {
+                          "kind": "PosEdgeKeyword",
+                          "text": "posedge"
+                        },
+                        "expr": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "clk"
+                          }
+                        }
+                      },
+                      "operatorToken": {
+                        "kind": "OrKeyword",
+                        "text": "or"
+                      },
+                      "right": {
+                        "kind": "SignalEventExpression",
+                        "edge": {
+                          "kind": "NegEdgeKeyword",
+                          "text": "negedge"
+                        },
+                        "expr": {
+                          "kind": "IdentifierName",
+                          "identifier": {
+                            "kind": "Identifier",
+                            "text": "rstn"
+                          }
+                        }
+                      }
+                    },
+                    "closeParen": {
+                      "kind": "CloseParenthesis",
+                      "text": ")"
+                    }
+                  }
+                },
+                "statement": {
+                  "kind": "SequentialBlockStatement",
+                  "begin": {
+                    "kind": "BeginKeyword",
+                    "text": "begin"
+                  },
+                  "items": [
+                    {
+                      "kind": "ConditionalStatement",
+                      "ifKeyword": {
+                        "kind": "IfKeyword",
+                        "text": "if"
+                      },
+                      "openParen": {
+                        "kind": "OpenParenthesis",
+                        "text": "("
+                      },
+                      "predicate": {
+                        "kind": "ConditionalPredicate",
+                        "conditions": [
+                          {
+                            "kind": "ConditionalPattern",
+                            "expr": {
+                              "kind": "UnaryLogicalNotExpression",
+                              "operatorToken": {
+                                "kind": "Exclamation",
+                                "text": "!"
+                              },
+                              "operand": {
+                                "kind": "IdentifierName",
+                                "identifier": {
+                                  "kind": "Identifier",
+                                  "text": "rstn"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "closeParen": {
+                        "kind": "CloseParenthesis",
+                        "text": ")"
+                      },
+                      "statement": {
+                        "kind": "SequentialBlockStatement",
+                        "begin": {
+                          "kind": "BeginKeyword",
+                          "text": "begin"
+                        },
+                        "items": [
+                          {
+                            "kind": "ExpressionStatement",
+                            "expr": {
+                              "kind": "NonblockingAssignmentExpression",
+                              "left": {
+                                "kind": "IdentifierName",
+                                "identifier": {
+                                  "kind": "Identifier",
+                                  "text": "sum"
+                                }
+                              },
+                              "operatorToken": {
+                                "kind": "LessThanEquals",
+                                "text": "<="
+                              },
+                              "right": {
+                                "kind": "UnbasedUnsizedLiteralExpression",
+                                "literal": {
+                                  "kind": "UnbasedUnsizedLiteral",
+                                  "text": "'0"
+                                }
+                              }
+                            },
+                            "semi": {
+                              "kind": "Semicolon",
+                              "text": ";"
+                            }
+                          }
+                        ],
+                        "end": {
+                          "kind": "EndKeyword",
+                          "text": "end"
+                        }
+                      },
+                      "elseClause": {
+                        "kind": "ElseClause",
+                        "elseKeyword": {
+                          "kind": "ElseKeyword",
+                          "text": "else"
+                        },
+                        "clause": {
+                          "kind": "SequentialBlockStatement",
+                          "begin": {
+                            "kind": "BeginKeyword",
+                            "text": "begin"
+                          },
+                          "items": [
+                            {
+                              "kind": "ExpressionStatement",
+                              "expr": {
+                                "kind": "NonblockingAssignmentExpression",
+                                "left": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "sum"
+                                  }
+                                },
+                                "operatorToken": {
+                                  "kind": "LessThanEquals",
+                                  "text": "<="
+                                },
+                                "right": {
+                                  "kind": "IdentifierName",
+                                  "identifier": {
+                                    "kind": "Identifier",
+                                    "text": "wSum"
+                                  }
+                                }
+                              },
+                              "semi": {
+                                "kind": "Semicolon",
+                                "text": ";"
+                              }
+                            }
+                          ],
+                          "end": {
+                            "kind": "EndKeyword",
+                            "text": "end"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "end": {
+                    "kind": "EndKeyword",
+                    "text": "end"
+                  }
+                }
+              }
+            }
+          ],
+          "endmodule": {
+            "kind": "EndModuleKeyword",
+            "text": "endmodule"
+          }
+        }
+      ]
+    }
+  }
+]
