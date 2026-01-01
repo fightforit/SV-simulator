@@ -17,6 +17,13 @@ Status update
 - `--top <module>` is required and missing input files now emit an error.
 - Missing instances/submodules are reported through slang diagnostics.
 - `-file` accepts multiple SV paths and `.f` file lists.
+- C++ stubs can be generated per instantiated module using `--cpp-out <dir>`.
+- Runtime library skeleton added (`sim::Kernel`, `sim::Signal`, NBA queue, edge scheduling).
+- Codegen now emits `sim_main.cpp` to run the generated modules with the runtime.
+- Runtime now supports `$monitor`, `$finish`, and time-based scheduling.
+- Codegen now emits `initial` blocks with `#delay`, `forever` clocks, and monitor setup.
+- Generated code compiles and links with `src/runtime.cpp`.
+- Codegen now instantiates child modules and wires ports (e.g., `adder_tb` instantiates `adder`).
 
 Milestone 4: Runtime kernel
 - Implement the shared runtime library (scheduler, signals, NBA queue).

@@ -36,6 +36,7 @@ module adder_tb();
         a = 8'd25;
         b = 8'd30;
 
+        #(CLK_PERIOD);
         $finish();
     end
 

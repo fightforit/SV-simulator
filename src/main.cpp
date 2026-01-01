@@ -8,6 +8,7 @@
 #include "slang/ast/Compilation.h"
 #include "slang/diagnostics/DiagnosticEngine.h"
 
+#include "sim/codegen.h"
 #include "sim/frontend.h"
 #include "sim/simulator.h"
 
@@ -54,11 +55,17 @@ int main(int argc, char** argv) {
     std::vector<std::string> inputFiles;
     std::string topName;
     std::string astOutPath;
+    std::string cppOutDir;
+    bool runSim = true;
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
         if (arg == "--ast-out" && i + 1 < argc) {
             astOutPath = argv[++i];
+        } else if (arg == "--cpp-out" && i + 1 < argc) {
+            cppOutDir = argv[++i];
+        } else if (arg == "--no-sim") {
+            runSim = false;
         } else if (arg == "--top" && i + 1 < argc) {
             topName = argv[++i];
         } else if (arg == "-file" && i + 1 < argc) {
@@ -123,8 +130,15 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    sim::Simulator sim(compilation, *top);
-    sim.build();
-    sim.run();
+    if (!cppOutDir.empty()) {
+        if (!sim::writeCppOutput(*top, cppOutDir))
+            return 1;
+    }
+
+    if (runSim) {
+        sim::Simulator sim(compilation, *top);
+        sim.build();
+        sim.run();
+    }
     return 0;
 }
