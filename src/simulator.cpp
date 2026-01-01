@@ -9,6 +9,7 @@
 #include <queue>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -64,6 +65,7 @@ struct Signal {
 enum class ProcessKind {
     ContinuousAssign,
     AlwaysFF,
+    AlwaysComb,
     Monitor
 };
 
@@ -115,7 +117,8 @@ struct Simulator::Impl {
 
         collectInitials(top.body);
         for (auto& proc : processes) {
-            if (proc->kind == ProcessKind::ContinuousAssign)
+            if (proc->kind == ProcessKind::ContinuousAssign ||
+                proc->kind == ProcessKind::AlwaysComb)
                 scheduleProcess(*proc, /*at*/ 0);
         }
     }
@@ -314,6 +317,72 @@ struct Simulator::Impl {
         return nullptr;
     }
 
+    void collectExprSymbols(const Expression& expr,
+                            std::unordered_set<const ValueSymbol*>& deps) {
+        expr.visitSymbolReferences([&](const Expression&, const Symbol& sym) {
+            if (!ValueSymbol::isKind(sym.kind))
+                return;
+            if (sym.kind == SymbolKind::Parameter)
+                return;
+            deps.insert(&sym.as<ValueSymbol>());
+        });
+    }
+
+    void collectStatementSymbols(const Statement& stmt,
+                                 std::unordered_set<const ValueSymbol*>& deps) {
+        switch (stmt.kind) {
+            case StatementKind::Block: {
+                auto& block = stmt.as<BlockStatement>();
+                collectStatementSymbols(block.body, deps);
+                break;
+            }
+            case StatementKind::List: {
+                auto& list = stmt.as<StatementList>();
+                for (auto* s : list.list)
+                    collectStatementSymbols(*s, deps);
+                break;
+            }
+            case StatementKind::Conditional: {
+                auto& cond = stmt.as<ConditionalStatement>();
+                collectExprSymbols(*cond.conditions[0].expr, deps);
+                collectStatementSymbols(cond.ifTrue, deps);
+                if (cond.ifFalse)
+                    collectStatementSymbols(*cond.ifFalse, deps);
+                break;
+            }
+            case StatementKind::Timed: {
+                auto& ts = stmt.as<TimedStatement>();
+                if (ts.timing.kind == TimingControlKind::Delay) {
+                    auto& delay = ts.timing.as<DelayControl>();
+                    collectExprSymbols(delay.expr, deps);
+                }
+                collectStatementSymbols(ts.stmt, deps);
+                break;
+            }
+            case StatementKind::ExpressionStatement: {
+                auto& es = stmt.as<ExpressionStatement>();
+                if (es.expr.kind == ExpressionKind::Assignment) {
+                    auto& a = es.expr.as<AssignmentExpression>();
+                    collectExprSymbols(a.right(), deps);
+                } else {
+                    collectExprSymbols(es.expr, deps);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    void registerDependencies(Process& proc, const std::unordered_set<const ValueSymbol*>& deps) {
+        for (const auto* sym : deps) {
+            auto it = signalMap.find(sym);
+            if (it == signalMap.end())
+                continue;
+            it->second->levelSensitive.push_back(&proc);
+        }
+    }
+
     void collectSignals(const Scope& scope, const std::string& prefix) {
         for (auto& member : scope.members()) {
             if (!ValueSymbol::isKind(member.kind))
@@ -400,27 +469,41 @@ struct Simulator::Impl {
     }
 
     void addProceduralBlock(const ProceduralBlockSymbol& block) {
-        if (block.procedureKind != ProceduralBlockKind::AlwaysFF)
+        if (block.procedureKind == ProceduralBlockKind::AlwaysFF) {
+            const Statement& body = block.getBody();
+            const Statement* stmtBody = &body;
+            const TimingControl* timing = nullptr;
+            if (body.kind == StatementKind::Timed) {
+                auto& ts = body.as<TimedStatement>();
+                timing = &ts.timing;
+                stmtBody = &ts.stmt;
+            }
+
+            auto proc = std::make_unique<Process>();
+            proc->kind = ProcessKind::AlwaysFF;
+            proc->run = [this, stmtBody]() { evalStatement(*stmtBody, /*allowNba*/ true); };
+
+            if (timing) {
+                registerEventSensitivity(*timing, *proc);
+            }
+
+            processes.push_back(std::move(proc));
             return;
-
-        const Statement& body = block.getBody();
-        const Statement* stmtBody = &body;
-        const TimingControl* timing = nullptr;
-        if (body.kind == StatementKind::Timed) {
-            auto& ts = body.as<TimedStatement>();
-            timing = &ts.timing;
-            stmtBody = &ts.stmt;
         }
 
-        auto proc = std::make_unique<Process>();
-        proc->kind = ProcessKind::AlwaysFF;
-        proc->run = [this, stmtBody]() { evalStatement(*stmtBody, /*allowNba*/ true); };
+        if (block.procedureKind == ProceduralBlockKind::AlwaysComb) {
+            const Statement& body = block.getBody();
+            const Statement* stmtBody = &body;
+            auto proc = std::make_unique<Process>();
+            proc->kind = ProcessKind::AlwaysComb;
+            proc->run = [this, stmtBody]() { evalStatement(*stmtBody, /*allowNba*/ false); };
 
-        if (timing) {
-            registerEventSensitivity(*timing, *proc);
+            std::unordered_set<const ValueSymbol*> deps;
+            collectStatementSymbols(*stmtBody, deps);
+            registerDependencies(*proc, deps);
+
+            processes.push_back(std::move(proc));
         }
-
-        processes.push_back(std::move(proc));
     }
 
     void registerEventSensitivity(const TimingControl& timing, Process& proc) {

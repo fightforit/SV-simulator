@@ -13,6 +13,7 @@ Supported features (initial)
 - Modules, ports, and parameterized widths.
 - Continuous assignments.
 - `always_ff` with posedge/negedge sensitivity and nonblocking assignments.
+- `always_comb` with level-sensitive scheduling.
 - `initial` blocks with `#delay` and simple assignments.
 - `$monitor` and `$finish`.
 
@@ -23,4 +24,4 @@ Code generation model
 
 Out of scope (initial)
 - Full 4-state logic and full IEEE timing regions.
-- `always_comb` / `always_latch`, assertions, DPI, classes, and interfaces.
+- `always_latch`, assertions, DPI, classes, and interfaces.

@@ -5,7 +5,7 @@ Good Verilator-inspired pieces for the current structure
 - Stable scheduling model: explicit active/NBA/time queues with deterministic order.
   Status: implemented (runtime uses time + enqueue order in `sim::Kernel`).
 - Dependency-driven triggers: build per-process sensitivity from elaborated RHS signals and reschedule only on changes.
-  Status: not yet implemented.
+  Status: implemented (simulator tracks RHS dependencies for continuous assigns and `always_comb`).
 - Two-phase update for NBAs: stage nonblocking updates and commit in a single NBA phase.
   Status: implemented (NBA queue + apply phase).
 - Separation of elaboration vs. runtime: resolve hierarchy and constants in the compiler stage; runtime stays generic.
